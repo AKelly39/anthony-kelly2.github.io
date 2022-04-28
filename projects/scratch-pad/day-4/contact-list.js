@@ -69,23 +69,26 @@ function makeContactList() {
             contacts.splice(index, 1);
         },
         printAllContactNames: function(){
-            var names = [];
+            var names = "";
+            /*
             for (let i = 0; i < contacts.length; i++){
-                names.push(contacts[i].nameFirst + " " + contacts[i].nameLast);  
+                names += (contacts[i].nameFirst + " " + contacts[i].nameLast);  
             }
-            console.log(names[2]);
+            console.log(names);
+            */
             //console.log(names.split('').join("<br />"));
 
-            /*
+            
             for (var i = 0; i < contacts.length; i++){
                 if (i === contacts.length - 1){
-                    console.log(contacts[i].nameFirst + " " + contacts[i].nameLast);
+                    names += (contacts[i].nameFirst + " " + contacts[i].nameLast);
                 } else {
-                console.log(contacts[i].nameFirst + " " + contacts[i].nameLast, '/n');
+                names += (contacts[i].nameFirst + " " + contacts[i].nameLast + '\n');
                 }
             }
+            return names;
             
-           
+           /*
             while(contacts.length > 1){
                 console.log(contacts[0].nameFirst + " " + contacts[0].nameLast);
                 contacts.splice(0, 1);
