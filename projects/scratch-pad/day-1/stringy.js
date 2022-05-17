@@ -186,13 +186,13 @@ function longest(stringOne, stringTwo) {
  */
 function sortAscending(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
-    if (stringOne[1] < stringTwo[1]){
+    if (stringOne < stringTwo){
         return 1;
     } //else 
-    if (stringOne[1] > stringTwo[1]){
+    if (stringOne > stringTwo){
         return -1;
     } //else 
-    if (stringOne[1] === stringTwo[1]){
+    if (stringOne === stringTwo){
         return 0;
     } 
 
@@ -212,13 +212,13 @@ function sortAscending(stringOne, stringTwo) {
 function sortDescending(stringOne, stringTwo) {
     // YOUR CODE BELOW HERE //
     //if ((stringOne.localCompare(stringTwo)) > 0){
-    if (stringOne[1] < stringTwo[1]){
+    if (stringOne < stringTwo){
         return -1;
     } //else 
-    if (stringOne[1] > stringTwo[1]){
+    if (stringOne > stringTwo){
         return 1;
     } //else 
-    if (stringOne[1] === stringTwo[1]){
+    if (stringOne === stringTwo){
         return 0;
     } 
 

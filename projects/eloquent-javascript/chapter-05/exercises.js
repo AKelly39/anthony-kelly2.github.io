@@ -2,15 +2,25 @@
 // flatten /////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function flatten() {
+var arrs = [[1, 3, 2], [5,4]];
+function flatten(arrays) {
+  //console.log(arrays.reduce(function(flat, current) {
+  //  return flat.concat(current);
+  //}, []));
+  return arrays.reduce((flat, current) => flat.concat(current), []);
 
 }
+console.log(flatten(arrs));
 
 // /////////////////////////////////////////////////////////////////////////////
 // loop ////////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function loop() {
+function loop(value, test, update, execute) {
+  if (test(value)) {
+    execute(value);
+    return loop(update(value), test, update, execute);
+  }
 
 }
 
@@ -18,7 +28,13 @@ function loop() {
 // every ///////////////////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function every() {
+function every(array, predicate) {
+  for (var i = 0; i < array.length; i++) {
+    if (!predicate(array[i]))
+      return false;
+  }
+  return true;
+
 
 }
 
@@ -26,7 +42,39 @@ function every() {
 // dominantDirection ///////////////////////////////////////////////////////////
 // /////////////////////////////////////////////////////////////////////////////
 
-function dominantDirection() {
+function characterScript(code) {
+  for (let script of SCRIPTS) {
+    if (script.ranges.some(([from, to]) => {
+        return code >= from && code < to;
+      })) {
+      return script;
+    }
+  }
+  return null;
+}
+
+
+function dominantDirection(str) {
+  // remove spaces from string
+  let newStr = str.replace(" ", " ");
+  // create arrays for each array
+  let ltr = [];
+  let rtl = [];
+  //iterate though string
+  for (var i = 0; i < str.length; i++){
+    let scriptName = characterScript(newStr.charCodeAt(i));
+    console.log(scriptName);
+    // check if scriptname is NOT equal to null
+    if (scriptName !== null){
+      scriptName.direction === 'ltr' ? ltr.push(scriptName.name) : rtl.push(scriptName.name);
+    }
+
+  }
+  if (ltr.length > rtl.length){
+    return 'ltr';
+  } else {
+    return 'rtl';
+  }
 
 }
 

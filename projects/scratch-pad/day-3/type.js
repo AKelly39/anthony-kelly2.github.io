@@ -92,13 +92,15 @@ function typeOf(value) {
         return "number";
     } else if (typeof(value) === "boolean"){
         return "boolean";
-    }else if (typeof(value) === "boolean"){
-        return "boolean";
-    }else if (typeof(value) === "boolean"){
-        return "boolean";
+    }else if (value === null){
+        return "null";
+    }else if (typeof(value)  === "function"){
+        return "function";
+    }else if (typeof(value)  === "undefined"){
+        return "undefined";
     }else if ((value instanceof Date) === true){
         return "date";
-    } else if (Array.isArray(value) === true){
+    } else if (Array.isArray(value)){
         return "array";
     } else if (typeof(value) === 'object' && Array.isArray(value) === false && value !== null && value instanceof Date === false) {
         return "object";

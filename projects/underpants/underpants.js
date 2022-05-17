@@ -45,6 +45,29 @@ _.identity = function(value){
 * _.typeOf([1,2,3]) -> "array"
 */
 
+_.typeOf = function(value) {
+    // YOUR CODE BELOW HERE //
+    if (typeof(value) === "string"){
+        return "string";
+    } else if (typeof(value) === "number"){
+        return "number";
+    } else if (typeof(value) === "boolean"){
+        return "boolean";
+    }else if (value === null){
+        return "null";
+    }else if (typeof(value)  === "function"){
+        return "function";
+    }else if (typeof(value)  === "undefined"){
+        return "undefined";
+    }else if ((value instanceof Date) === true){
+        return "date";
+    } else if (Array.isArray(value)){
+        return "array";
+    } else if (typeof(value) === 'object' && Array.isArray(value) === false && value !== null && value instanceof Date === false) {
+        return "object";
+    }
+}
+
 
 /** _.first
 * Arguments:
@@ -197,6 +220,19 @@ _.contains = function(array, value){
 *   _.each(["a","b","c"], function(e,i,a){ console.log(e)});
 *      -> should log "a" "b" "c" to the console
 */
+
+_.each = function(collection, callback){
+    if (Array.isArray(collection)){
+        for(let i = 0; i < collection.length; i++){
+            callback(collection[i], i, collection);
+        }
+
+    } else if (typeof(collection) === 'object' && Array.isArray(collection) === false && collection !== null && collection instanceof Date === false) {
+        for(var key in collection){
+            callback(collection[key], key, collection);
+        }
+    }
+}
 
 
 /** _.unique
@@ -392,29 +428,54 @@ _.every = function(collection, callback){
                 if(!collection[i]){
                     return false;
                 }
+                /*
+                if(collection[i]){
+                    return true;
+                } else {
+                    return false;
+                }
+                */
+               //return false;
             }
+            
 
         } else {
             for (let key in Object){
                 if (!collection[key]){
                     return false;
                 }
+                /*
+                if(collection[key]){
+                    return true;
+                } else {
+                    return false;
+                }
+                */
             }
 
         }
+        return true;
 
     } else { 
         if (Array.isArray(collection)){
-            for (let i = 0; i < collection; i++){
+            for (let i = 0; i < collection.length; i++){
                 if (!callback(collection[i], i, collection)){
                     return false;
                 }
+                /*
+                if (callback(collection[i], i, collection)){
+                    return true;
+                } else {
+                    return false;
+                }
+                */
 
             }
         }
+        return true;
 
     }
-    return true;
+    //return true;
     return false;
 }
 
@@ -444,31 +505,35 @@ _.some = function(collection, callback){
     if(callback === undefined){
         if (Array.isArray(collection)){
             for (var i = 0; i < collection.length; i++){
-                if(!collection[i]){
-                    return false;
+                if(collection[i]){
+                    return true;
                 }
             }
 
         } else {
             for (let key in Object){
-                if (!collection[key]){
-                    return false;
+                if (collection[key]){
+                    return true;
                 }
             }
 
         }
     } else { 
         if (Array.isArray(collection)){
-            for (let i = 0; i < collection; i++){
-                if (!callback(collection[i], i, collection)){
-                    return false;
+            for (let i = 0; i < collection.length; i++){
+                if (callback(collection[i], i, collection)){
+                    return true;
+                } 
+            } 
+        } else {
+            for (let key in collection){
+                if (callback(collection[key], key, collection)){
+                    return true;
                 }
-
             }
         }
-
     }
-    return true;
+    //return true;
     return false;
 
 }
@@ -498,12 +563,12 @@ _.some = function(collection, callback){
 _.reduce = function(array, callback, seed) {
     if (seed === undefined){
         seed = array[0];
-        for (let i = 0; i < array.length; i++){
-            seed = callback(seed, array[i], i, array);
+        for (let i = 1; i < array.length; i++){
+            seed = callback(seed, array[i], i);
         }
     } else {
         for (let i = 0; i < array.length; i++){
-            seed = callback(seed, array[i], i, array);
+            seed = callback(seed, array[i], i);
         }
     }
     return seed;
@@ -544,6 +609,22 @@ _.reduce = function(array, callback, seed) {
 *   _.extend(data, {b:"two"}); -> data now equals {a:"one",b:"two"}
 *   _.extend(data, {a:"two"}); -> data now equals {a:"two"}
 */
+
+_.extend = function(base){
+    var updated = {};
+    var args = Array.from(arguments);
+    for (var i = 1; i < args.length; i++){
+        //var updated = {};
+        updated = Object.assign(base, args[i]);
+        //return updated;
+    }
+    return updated;
+    //return Object.assign(base, obj1);
+
+}
+
+
+
 
 //////////////////////////////////////////////////////////////////////
 // DON'T REMOVE THIS CODE ////////////////////////////////////////////

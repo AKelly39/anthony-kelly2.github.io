@@ -91,9 +91,9 @@ console.log(animals);
 var friends = [];
 
 function getRandom(animals){
-  var friend = animals[Math.floor(Math.random() * 10)]
+  //var friend = animals[Math.floor(Math.random() * 10)];
   //friends.push(friend.name);
-  return friend;
+  return Math.floor(Math.random() * animals.length); //friend;
 }
 console.log(friends);
 

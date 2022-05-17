@@ -51,7 +51,11 @@ function valuesToString(object) {
 //////////////////////////////////////////////////////////////////////
 
 function arrayOrObject(collection) {
-    
+    if (typeof(collection) === 'object' && Array.isArray(collection) === false && collection !== null && collection instanceof Date === false) {
+        return "object";
+    } else if (Array.isArray(collection)){
+        return "array";
+    }
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -99,11 +103,9 @@ function profileInfo(object) {
 //////////////////////////////////////////////////////////////////////
 
 function maybeNoises(object) {
-    if(object.noises !== undefined){
+    if(object.noises !== undefined && object.noises.length > 0){
         return object.noises.join(' ');
-    } else if(object.noises === []) {
-        return "there are no noises";
-    } else {
+    } else if(object.noises === undefined || !object.noises.length) {
         return "there are no noises";
     }
 
@@ -138,7 +140,9 @@ function addFriend (name, object) {
 
 function isFriend(name, object) {
     //if (object.friends.includes(name)){
-    if (object.friends.indexOf(name) >= 0){
+    if (object.friends === undefined){
+        return false;
+    } else if (object.friends.indexOf(name) >= 0){
         return true;
     } else {
         return false;
@@ -161,14 +165,33 @@ function isFriend(name, object) {
 
 function nonFriends(name, array) {
     var notyet = [];
+    var friend = [];
+    /*
     for (var i = 0; i < name.friends.length; i++){
-        //if(!name.friends.inclues(array[i])){
-        for (var i = 0; i < array.length; i++){
-            if(array[i] != name.friends[i]){
-            notyet.push(array[i]);
+        //if(!name.friends.includes(array[i])){
+        for (var j = 0; j < array.length; j++){
+            if(array[j] != name.friends[i]){
+                notyet.push(array[j]);
             }
         }
     }
+    */
+   for (var i = 0; i < array.length; i++){
+       if (name === array[i].name){
+           for (var j = 0; j < array[i].friends.length; j++){
+               friend.push(array[i].friends[j]);
+           }
+       }
+    }
+    for(var i = 0; i < array.length; i++){
+        if(!friend.includes(array[i].name) && array[i].name !== name){
+            notyet.push(array[i].name);
+        }
+        
+
+    }
+    console.log(notyet);
+
     return notyet;
 
 }
@@ -178,9 +201,18 @@ function nonFriends(name, array) {
 //////////////////////////////////////////////////////////////////////
 
 function updateObject(object, key, value) {
-    for(var key in object){
-
+    if(object.key){
+        object.key = value;
+    } else {
+        object[key] = value;
     }
+
+    //for(var key in object){
+    //    if(object[key] === key){
+    //        object.key = value;
+    //    }
+    //}
+    return object;
 
 }
 
@@ -204,6 +236,8 @@ function removeProperties(object, array) {
 //////////////////////////////////////////////////////////////////////
 
 function dedup(array) {
+    let unique = [...new Set(array)];
+    return unique;
 
 }
 
